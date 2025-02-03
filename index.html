@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Subject Timer</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 10px;
+}
+
+.countdown {
+    font-size: 1000%;
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    background: #fffaa0;
+    min-width: 50px;
+    height: 36px;
+    padding: 0 12px;
+    cursor: pointer;
+    color: #000 !important;
+    font-size: 120%;
+    line-height: 24px;
+}
+
+input[type="number"] {
+    font-size: 18px;
+    padding: 5px;
+    width: 100px;
+    text-align: center;
+}
+
+input[type="text"] {
+    margin: 5px; 
+    padding: 5px 5px;
+    font-size: 200%;
+    text-align: center;
+}
+
+.change {
+    margin: 5px;
+    padding: 8px;
+    font-size: 250%;
+}
+
+.input-container {
+    margin-top: 10px;
+}
+
+span {
+    font-size: 150%;
+}
+
+.red-text {
+    color: red;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.blink {
+    animation: blink 1s infinite;
+}
+
+@media only screen and (max-width: 768px) {
+    .countdown {
+        font-size: 350%;
+    }
+
+    button {
+        min-width: 40px;
+        height: 30px;
+        font-size: 100%;
+        line-height: 20px;
+    }
+
+    input[type="number"] {
+        font-size: 16px;
+        width: 80px;
+    }
+
+    input[type="text"] {
+        font-size: 150%;
+    }
+
+    .change {
+        font-size: 200%;
+    }
+
+    span {
+        font-size: 120%;
+    }
+}
+</style>
+    </head>
+    <body>
+        <div>
+            <h2>Please enter your time below</h2>
+            <h2>
+                <label for="hours">Hours:</label>
+                <input type="number" id="hours" min="0" value="0" />
+            </h2>
+            <h2>
+                <label for="minutes">Minutes:</label>
+                <input type="number" id="minutes" min="0" value="0" />
+            </h2>
+            <h2>
+                <label for="seconds"> Second:</label>
+                <input type="number" id="seconds" min="0" value="0" />
+            </h2>
+        </div>
+        <p>
+            <button onclick="startCountdown()">Start</button>
+            <button onclick="stopCountdown()">Stop</button>
+            <button onclick="resetCountdown()">Reset</button>
+        </p>
+        <p>
+            <!--<button class="blue-btn" onclick="window.location.href='Index.html';">科目計時器</button>-->
+            <!--<button class="blue-btn" onclick="window.location.href='Stopwatch.html';">秒錶</button>-->
+        </p>
+        <div class="countdown" style="display: none"></div>
+        <input type="text" placeholder="Enter the Subject Info ">
+        <div class="input-container">
+            <span>Start:</span>
+            <input type="number" placeholder="hour" class="change">
+            <span>:</span>
+            <input type="number" placeholder="min" class="change">
+            <span></span></br>
+            <span>End:</span>
+            <input type="number" placeholder="hour" class="change">
+            <span>:</span>
+            <input type="number" placeholder="min" class="change">
+        </div>
+
+        <script>
+            let timer;
+            let remainingSeconds = 0;
+            let isTimerRunning = false;
+    
+            function startCountdown() {
+                if (isTimerRunning) {
+                    return;
+                }
+    
+                const hours = parseInt(document.getElementById("hours").value);
+                const minutes = parseInt(
+                    document.getElementById("minutes").value,
+                );
+                const seconds = parseInt(
+                    document.getElementById("seconds").value,
+                );
+    
+                const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+    
+                if (totalSeconds <= 0 || isNaN(totalSeconds)) {
+                    alert("Enter valid time.");
+                    return;
+                }
+    
+                document.querySelector("button:nth-of-type(1)").disabled = true;
+    
+                document.querySelector(".countdown").style.display = "block";
+    
+                remainingSeconds = totalSeconds;
+                updateCountdownDisplay(remainingSeconds);
+    
+                timer = setInterval(function () {
+                    remainingSeconds--;
+                    updateCountdownDisplay(remainingSeconds);
+    
+                    if (remainingSeconds <= 0) {
+                        clearInterval(timer);
+                        document.querySelector(".countdown").textContent =
+                            "Time's up";
+                    }
+                }, 1000);
+    
+                isTimerRunning = true;
+            }
+    
+            function stopCountdown() {
+                clearInterval(timer);
+                isTimerRunning = false;
+                document.querySelector("button:nth-of-type(1)").disabled =
+                    false;
+            }
+    
+            function resetCountdown() {
+                clearInterval(timer);
+                remainingSeconds = 0;
+                isTimerRunning = false;
+                document.querySelector(".countdown").style.display = "none";
+                document.getElementById("hours").value = 0;
+                document.getElementById("minutes").value = 0;
+                document.getElementById("seconds").value = 0;
+                document
+                    .querySelector(".countdown")
+                    .classList.remove("blink", "red-text");
+                document.querySelector("button:nth-of-type(1)").disabled =
+                    false;
+            }
+    
+            function updateCountdownDisplay(seconds) {
+                const hours = Math.floor(seconds / 3600);
+                const minutes = Math.floor((seconds % 3600) / 60);
+                const secs = seconds % 60;
+                document.querySelector(".countdown").textContent =
+                    `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+    
+                if (seconds <= 0) {
+                    document
+                        .querySelector(".countdown")
+                        .classList.add("blink", "red-text");
+                } else {
+                    document
+                        .querySelector(".countdown")
+                        .classList.remove("blink", "red-text");
+                }
+            }
+        </script>
+    </body>
+</html>

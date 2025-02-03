@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stopwatch</title>
+<style>
+    body {
+        font-family: Roboto;
+        text-align: center;
+    }
+
+    .stopwatch {
+        font-size: 1200% !important;
+    }
+
+    button {
+        border: none;
+        border-radius: 10px;
+        background: #fffaa0;
+        min-width: 68px;
+        height: 48px;
+        padding: 0 16px;
+        cursor: pointer;
+        color: #000 !important;
+        text-align: center;
+        font-family: Roboto;
+        font-size: 150%;
+        font-style: normal;
+        font-weight: 400;
+        text-wrap: nowrap;
+        display: inline-block;
+        line-height: 36px;
+        text-decoration: none;
+        box-sizing: unset;
+    }
+
+    input[type="number"] {
+        font-size: 300%;
+        padding: 5px;
+        width: 200px;
+        text-align: center;
+    }
+
+    input[type="text"] {
+        margin: 5px;
+        padding: 8px;
+        font-size: 300%;
+        text-align: center;
+    }
+
+    .input-container {
+        margin-top: 20px;
+    }
+
+    span {
+        font-size: 300%;
+    }
+
+    /* Media query for screens smaller than 768px (typical mobile devices) */
+    @media only screen and (max-width: 768px) {
+        .stopwatch {
+            font-size: 800% !important;
+        }
+
+        button {
+            min-width: 50px;
+            height: 36px;
+            font-size: 100%;
+            line-height: 24px;
+        }
+
+        input[type="number"] {
+            font-size: 150%;
+            width: 150px;
+        }
+
+        input[type="text"] {
+            font-size: 150%;
+        }
+
+        .input-container {
+            margin-top: 10px;
+        }
+
+        span {
+            font-size: 150%;
+        }
+    }
+</style>
+</head>
+
+<body>
+    <input type="text" placeholder="Enter subject Info">
+    <div class="input-container">
+        <span>Start:</span>
+        <input type="number" placeholder="hour">
+        <span>:</span>
+        <input type="number" placeholder="min">
+        <span></span></br>
+        <span>End:  </span>
+        <input type="number" placeholder="hour">
+        <span>:</span>
+        <input type="number" placeholder="min">
+    </div>
+    <div class="stopwatch">00:00:00</div>
+    <button onclick="startStopwatch()">Start</button>
+    <button onclick="stopStopwatch()">Stop</button>
+    <button onclick="resetStopwatch()">Reset</button>
+
+    <p>
+        <!--<button class="blue-btn" onclick="window.location.href='Index.html';">Timer</button>-->
+        <!--<button class="blue-btn" onclick="window.location.href='Countdown.html';">計時器</button>-->
+    </p>
+    <script>
+        let timer;
+        let seconds = 0;
+        let minutes = 0;
+        let hours = 0;
+        let isRunning = false;
+
+        function displayStopwatch() {
+            document.querySelector(".stopwatch").textContent =
+                `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+        }
+
+        function startStopwatch() {
+            if (!isRunning) {
+                timer = setInterval(function () {
+                    seconds++;
+                    if (seconds === 60) {
+                        seconds = 0;
+                        minutes++;
+                    }
+                    if (minutes === 60) {
+                        minutes = 0;
+                        hours++;
+                    }
+                    displayStopwatch();
+                }, 1000);
+                isRunning = true;
+            }
+        }
+
+        function stopStopwatch() {
+            clearInterval(timer);
+            isRunning = false;
+        }
+
+        function resetStopwatch() {
+            clearInterval(timer);
+            seconds = 0;
+            minutes = 0;
+            hours = 0;
+            displayStopwatch();
+            isRunning = false;
+        }
+    </script>
+</body>
+
+</html>
