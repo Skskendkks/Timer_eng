@@ -1,5 +1,5 @@
 # 科目計時器
-這是一個簡單的科目計時器，幫助老師在課堂中展示考試時間。如果你想嘗試這個網站，歡迎前往 www.cmass.edu.hk/timer 。
+這是一個簡單的科目計時器，幫助老師在課堂中展示考試時間。如果你想嘗試這個網站，歡迎前往 https://sites.google.com/view/subject-timer/index 。
 
 **輸入時間**：在「請在下方的輸入時間」部分輸入所需的倒數時間。在第一個欄位「時：」輸入小時數，在第二個欄位「分：」輸入分鐘數，在第三個欄位「秒：」輸入秒數。
 
@@ -17,7 +17,7 @@
 # Subject Timer 
 
 Just a simple subject timer to help the teacher show in the Classroom. 
-If you want to try this website, welcome to www.cmass.edu.hk/timer. 
+If you want to try this website, welcome to https://sites.google.com/view/subject-timer/index. 
 
  **Input Time**:
 Enter the desired countdown time in the "請在下方的輸入時間" section. Input the number of hours in the first field labeled "時︰", minutes in the second field labeled "分︰", and seconds in the third field labeled "秒︰".
